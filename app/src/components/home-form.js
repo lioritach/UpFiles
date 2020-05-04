@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import _ from 'lodash'
+import classNames from 'classnames'
+import {upload} from '../helpers/upload'
 
 class HomeForm extends Component{
 
@@ -16,6 +18,7 @@ class HomeForm extends Component{
                 to: null,
                 from: null,
                 message: null,
+                files: null,
             }
         };
         this._onTextChange = this._onTextChange.bind(this);
@@ -48,6 +51,10 @@ class HomeForm extends Component{
                 ...this.state.form,
                 files: files,
             }
+        }, () => {
+            this._formValidation(['files'], (isValid) => {
+
+            });
         });
     }
 
@@ -87,6 +94,14 @@ class HomeForm extends Component{
                         return this._isEmail(form.to);
                     }
                 }
+            ],
+            files: [
+                {
+                    errorMessage: 'File is required!',
+                    isValid: () => {
+                        return form.files.length
+                    }
+                }
             ]
         }
 
@@ -95,7 +110,7 @@ class HomeForm extends Component{
             errors[field] = null;
             _.each(fieldValidations, (fieldValidation) => {
                 const isValid = fieldValidation.isValid();
-                if(isValid){
+                if(!isValid){
                     errors[field] = fieldValidation.errorMessage;
                 }
             });
@@ -120,8 +135,14 @@ class HomeForm extends Component{
 
     _onSubmit(event){
         event.preventDefault();
-        this._formValidation(['from', 'to'], (isValid) => {
-
+        this._formValidation(['from', 'to', 'files'], (isValid) => {
+            
+            if(isValid){
+                // the form is valid and ready to submit.
+                upload(this.state.form, (event) => {
+                    
+                })
+            }
         });
     }
 
@@ -138,7 +159,7 @@ class HomeForm extends Component{
 
     render(){
 
-        const {form} = this.state;
+        const {form, errors} = this.state;
         const {files} = form;
         return (
 
@@ -170,7 +191,7 @@ class HomeForm extends Component{
                             
                         }
                         
-                        <div className={'app-file-select-zone'}>
+                        <div className={classNames('app-file-select-zone', {'error': _.get(errors, 'files')})}>
                             <label htmlFor={'input-file'}>
                                 <input onChange={this._onFileAdded} id={'input-file'} type="file" multiple={true} />
                                 {
@@ -183,14 +204,16 @@ class HomeForm extends Component{
                 </div>
                 <div className={'app-card-content'}>
                     <div className={'app-card-content-inner'}>
-                        <div className={'app-form-item'}>
+                        <div className={classNames('app-form-item', {'error': _.get(errors, 'to')})}>
                             <label htmlFor={'to'}>Send to</label>
-                            <input onChange={this._onTextChange} value={form.to} name={'to'} placeholder={'Email address'} type={'text'} id={'to'}/>
+                            <input onChange={this._onTextChange} value={form.to} name={'to'} placeholder={_.get(errors, 'to') ? _.get(errors, 'to') : 'Email address'} 
+                            type={'text'} id={'to'}/>
                         </div>
 
-                        <div className={'app-form-item'}>
+                        <div className={classNames('app-form-item', {'error': _.get(errors, 'from')})}>
                             <label htmlFor={'from'}>From</label>
-                            <input onChange={this._onTextChange} name ={'form'} placeholder={'Your email address'} type={'text'} id={'from'}/>
+                            <input onChange={this._onTextChange} name ={'from'} placeholder={_.get(errors, 'from') ? _.get(errors, 'from') : 'Your email address'}
+                             type={'text'} id={'from'}/>
                         </div>
 
                         <div className={'app-form-item'}>

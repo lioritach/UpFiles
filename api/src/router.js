@@ -3,6 +3,7 @@ import path from 'path'
 import _ from 'lodash'
 import File from './models/file'
 import {ObjectID} from 'mongodb'
+import Post from './models/post'
 
 class AppRouter {
 
@@ -50,10 +51,30 @@ class AppRouter {
                         });
                     }
 
-                    return res.json({
-                        files: fileModels
+                    let post = new Post(app).initWithObject({
+                        from: _.get(req, 'body.from'),
+                        to: _.get(req, 'body.to'),
+                        message: _.get(req, 'body.message'),
+                        files: result.insertedIds,
+                    }).toJSON();
+
+                    // let save post object to posts collection.
+
+                    db.collection('posts').insertOne(post, (err, result) => {
+                        if (err) {
+                            return res.status(503).json({error: {message: "Your upload could not be saved."}});
+                        }
+                        //implement email sending to user with download link.
+
+                        // send email
+                        const sendEmail = new Email(app).sendDownloadLink(post, (err, info) => {
+
+                        });
+                        // callback to react app with post detail.
+                        return res.json(post);
                     });
-                })
+
+                });
 
             }else{
                 return res.status(503).json({
