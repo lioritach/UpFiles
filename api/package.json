@@ -24,13 +24,13 @@
       "no-unused-vars": 1
     }
   },
-  "author": "toan@tabvn.com",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.17.1",
     "loadash": "^1.0.0",
+    "mongod": "^2.0.0",
     "mongodb": "^2.2.33",
     "mongoose": "^5.9.10",
     "morgan": "^1.9.0",

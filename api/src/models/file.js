@@ -8,7 +8,7 @@ class File {
             orignalName: null,
             mimetype: null,
             size: null,
-            created: Date.now(),
+            created: new Date(),
         }
     }
 
@@ -17,7 +17,7 @@ class File {
         this.model.orignalName = _.get(object, 'originalName');
         this.model.mimetype = _.get(object, 'mimetype');
         this.model.size = _.get(object, 'size');
-        this.model.created = Date.now();
+        this.model.created = new Date();
 
         return this;
     }

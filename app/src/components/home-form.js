@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import _ from 'lodash'
 import classNames from 'classnames'
 import {upload} from '../helpers/upload'
+import PropTypes from 'prop-types'
 
 class HomeForm extends Component{
 
@@ -41,29 +42,35 @@ class HomeForm extends Component{
     }
 
     _onFileAdded(event){
+
         let files = _.get(this.state, 'form.files', []);
+
         _.each(_.get(event, 'target.files', []), (file) => {
             files.push(file);
         });
 
+
         this.setState({
-            form:{
+            form: {
                 ...this.state.form,
                 files: files,
             }
         }, () => {
+
             this._formValidation(['files'], (isValid) => {
 
             });
         });
     }
 
+    //email regex
     _isEmail(emailAddress){
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return emailRegex.test(emailAddress);
  
     }
 
+    //validate the form
     _formValidation(fields = [], callback = () => {}) {
         let {form, errors} = this.state;
         const validations = {
@@ -106,11 +113,16 @@ class HomeForm extends Component{
         }
 
         _.each(fields, (field) => {
+
             let fieldValidations = _.get(validations, field, []);
             errors[field] = null;
+
             _.each(fieldValidations, (fieldValidation) => {
+
                 const isValid = fieldValidation.isValid();
+
                 if(!isValid){
+
                     errors[field] = fieldValidation.errorMessage;
                 }
             });
@@ -138,9 +150,19 @@ class HomeForm extends Component{
         this._formValidation(['from', 'to', 'files'], (isValid) => {
             
             if(isValid){
-                // the form is valid and ready to submit.
-                upload(this.state.form, (event) => {
-                    
+
+                const data = this.state.form;
+
+                if(this.props.onUploadBegin){
+                    this.props.onUploadBegin(data);
+                }
+
+                upload(data, (event) => {
+
+                    if(this.props.onUploadEvent){
+                        this.props.onUploadEvent(event);
+                    }
+
                 })
             }
         });
@@ -148,7 +170,6 @@ class HomeForm extends Component{
 
     _onTextChange(event){
         let {form} = this.state;
-        console.log("Event", event.target.name, event.target.value);
 
         const fieldName = event.target.name;
         const fieldValue = event.target.value;
@@ -161,75 +182,104 @@ class HomeForm extends Component{
 
         const {form, errors} = this.state;
         const {files} = form;
+
         return (
 
             <div className={'app-card'}>
                 <form onSubmit={this._onSubmit}>
-                <div className={'app-card-header'}>
-                    <div className={'app-card-header-inner'}>
+                    <div className={'app-card-header'}>
+                        <div className={'app-card-header-inner'}>
+                            {
+                                files.length ? <div className={'app-files-selected'}>
+                                    {
+                                        files.map((file, index) => {
+                                            return (
 
-                        
+                                                <div key={index} className={'app-files-selected-item'}>
 
-                        {
+                                                    <div className={'filename'}>{file.name}</div>
 
-                            files.length ? <div className={'app-files-selected'}>
-                                {
-                                    files.map((file, index) => {
+                                                    <div className={'file-action'}>
 
-                                        return(
-                                            <div key={index} className={'app-files-selected-item'}>
-                                                <div className={'filename'}>{file.name}</div>
-                                                <div className={'file-action'}><button onClick={() => this._onFileRemove(index)} type={'button'} className={'app-file-remove'}>X</button></div>
-                                            </div>
-                                        )
+                                                        <button onClick={() => this._onFileRemove(index)}
 
-                                    })
-                                }
+                                                                type={'button'} className={'app-file-remove'}>X
 
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+
+                                    }
                                 </div> : null
 
-                            
-                        }
-                        
-                        <div className={classNames('app-file-select-zone', {'error': _.get(errors, 'files')})}>
-                            <label htmlFor={'input-file'}>
-                                <input onChange={this._onFileAdded} id={'input-file'} type="file" multiple={true} />
-                                {
-                                    files.length ? <span className={'app-upload-description text-uppercase'}>Add more files</span> : <span><span className={'app-upload-icon'} />
-                                    <span className={'app-upload-description'}>Drag and drop your files here</span></span>
-                                }
-                            </label>
+                            }
+
+                            <div className={classNames('app-file-select-zone', {'error': _.get(errors, 'files')})}>
+                                <label htmlFor={'input-file'}>
+                                    <input onChange={this._onFileAdded} id={'input-file'} type="file" multiple={true}/>
+                                    {
+                                        files.length ? <span className={'app-upload-description text-uppercase'}>Add more files</span> :
+                                            <span>
+                                                <span className={'app-upload-icon'}><i className={'icon-picture-streamline'} /> </span>
+                                                <span className={'app-upload-description'}>Drag and drop your files here.</span>
+                                            </span>
+                                    }
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className={'app-card-content'}>
-                    <div className={'app-card-content-inner'}>
-                        <div className={classNames('app-form-item', {'error': _.get(errors, 'to')})}>
-                            <label htmlFor={'to'}>Send to</label>
-                            <input onChange={this._onTextChange} value={form.to} name={'to'} placeholder={_.get(errors, 'to') ? _.get(errors, 'to') : 'Email address'} 
-                            type={'text'} id={'to'}/>
+                    <div className={'app-card-content'}>
+                        <div className={'app-card-content-inner'}>
+                            <div className={classNames('app-form-item', {'error': _.get(errors, 'to')})}>
+                                <label htmlFor={'to'}>Send to</label>
+
+                                <input onChange={this._onTextChange} value={form.to} name={'to'}
+
+                                       placeholder={_.get(errors, 'to') ? _.get(errors, 'to') : 'Email address'} type={'text'} id={'to'}/>
+                            </div>
+
+                            <div className={classNames('app-form-item', {'error': _.get(errors, 'from')})}>
+
+                                <label htmlFor={'from'}>From</label>
+
+                                <input value={_.get(form, 'from')} onChange={this._onTextChange} name={'from'} placeholder={_.get(errors, 'from') ? _.get(errors, 'from') : 'Your email address'}
+
+                                    type={'text'} id={'from'}/>
+                            </div>
+
+                            <div className={'app-form-item'}>
+
+                                <label htmlFor={'message'}>Message</label>
+
+                                <textarea value={_.get(form, 'message', '')} onChange={this._onTextChange} placeholder={'Add a note (optional)'}
+                                    
+                                    id={'message'} name={'message'}/>
+
+                            </div>
+                            <div className={'app-form-actions'}>
+
+                                <button type={'submit'} className={'app-button primary'}>Send</button>
+
+                            </div>
                         </div>
 
-                        <div className={classNames('app-form-item', {'error': _.get(errors, 'from')})}>
-                            <label htmlFor={'from'}>From</label>
-                            <input onChange={this._onTextChange} name ={'from'} placeholder={_.get(errors, 'from') ? _.get(errors, 'from') : 'Your email address'}
-                             type={'text'} id={'from'}/>
-                        </div>
-
-                        <div className={'app-form-item'}>
-                            <label htmlFor={'message'}>Message</label>
-                            <textarea onChange={this._onTextChange} placeholder={'Add a note (optional)'} id={'message'} name={'message'} />
-                        </div>
-
-                        <div className={'app-form-actions'}>
-                            <button type={'submit'} className={'app-button primary'}>Send</button>
-                        </div>
                     </div>
-                </div>
+
                 </form>
+
             </div>
+
         )
+
     }
+
 }
+
+HomeForm.propTypes = {
+    onUploadBegin: PropTypes.func,
+    onUploadEvent: PropTypes.func
+};
 
 export default HomeForm;
