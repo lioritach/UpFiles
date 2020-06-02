@@ -29,12 +29,26 @@ class Home extends Component{
             case 'HomeUploading':
 
 
-                return <HomeUploading event={uploadEvent} data={data} />
+                return <HomeUploading onCancel={() => {
+
+                    this.setState({
+                        uploadEvent: null,
+                        data: null,
+                        componentName: 'HomeForm'
+                    })
+
+                }} event={uploadEvent} data={data} />
 
             case 'HomeUploadSent':
 
                 return (
-                    <HomeUploadSent />
+                    <HomeUploadSent onSendAnotherFile={() => {
+
+                        this.setState({
+                            componentName: 'HomeForm'
+                        })
+
+                    }} data={data} />
                 );
 
 
@@ -42,8 +56,15 @@ class Home extends Component{
                 return <HomeForm 
                 onUploadEvent={(event) => {
 
+                    let data = this.state.data;
+                    if(_.get(event, 'type') === 'success'){
+
+                        data = _.get(event, 'payload');
+                    }
+
                     this.setState(
                         {
+                            data: data,
                             uploadEvent: event,
                             componentName: (_.get(event, 'type') === 'success') ? 'HomeUploadSent': this.state.componentName,
                         }

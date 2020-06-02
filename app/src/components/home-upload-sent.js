@@ -14,10 +14,10 @@ class HomeUploadSent extends Component{
 
     render(){
 
-        //const {data} = this.props;
-        // console.log("Data", data);
-        // const to = _.get(data, 'to');
-        // const postId = _.get(data, '_id');
+        const {data} = this.props;
+        console.log("Data", data);
+        const to = _.get(data, 'to');
+        const postId = _.get(data, '_id');
 
         return (
             <div className={'app-card app-card-upload-sent'}>
@@ -31,13 +31,23 @@ class HomeUploadSent extends Component{
 
                                 <h2>Files sent!</h2>
 
-                                <p>We're sent an email to lioritach1@gmail.com with a download link. The link will expire in 30 days.</p>
+                                <p>We're sent an email to {to} with a download link. The link will expire in 30 days.</p>
 
                             </div>
 
                             <div className={'app-upload-sent-action app-form-actions'}>
-                                <button className={'app-button primary'} type={'button'}>View file</button>
-                                <button className={'app-button'} type={'button'}>Send another files</button>
+                                <button onClick={()=> {
+
+                                    history.push(`/share/${postId}`)
+
+                                }} className={'app-button primary'} type={'button'}>View file</button>
+                                <button onClick={()=> {
+                                    
+                                    if(this.props.onSendAnotherFile){
+                                        this.props.onSendAnotherFile(true);
+                                    }
+
+                                }} className={'app-button'} type={'button'}>Send another files</button>
                             </div>
                         </div>
                     </div>
@@ -47,9 +57,9 @@ class HomeUploadSent extends Component{
     }
 }
 
-// HomeUploadSent.propTypes = {
-//     data:  PropTyes.object,
-//     onSendAnotherFile:PropTyes.func
-// }
+HomeUploadSent.propTypes = {
+    data: PropTyes.object,
+    onSendAnotherFile: PropTyes.func
+}
 
 export default HomeUploadSent;

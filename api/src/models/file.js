@@ -5,7 +5,7 @@ class File {
         this.app = app;
         this.model = {
             name: null,
-            orignalName: null,
+            originalName: null,
             mimetype: null,
             size: null,
             created: new Date(),
@@ -14,7 +14,7 @@ class File {
 
     initWithObject(object){
         this.model.name = _.get(object, 'filename');
-        this.model.orignalName = _.get(object, 'originalName');
+        this.model.originalName = _.get(object, 'originalname');
         this.model.mimetype = _.get(object, 'mimetype');
         this.model.size = _.get(object, 'size');
         this.model.created = new Date();

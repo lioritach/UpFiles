@@ -3,11 +3,16 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-
 import {connect} from "./database";
 import AppRouter from "./router";
 import multer from 'multer'
 import path from 'path'
+import nodemailer from 'nodemailer'
+import {smtp} from './models/config'
+
+//Setup Email
+let email = nodemailer.createTransport(smtp);
+
 
 //file storage config
 const storageDir = path.join(__dirname, '..', 'storage');
@@ -41,6 +46,7 @@ app.use(bodyParser.json({
 app.set('root', __dirname);
 app.set('storageDir', storageDir);
 app.set('upload', upload);
+app.email = email;
 
 //Connect to the database
 connect((err, db) => {
@@ -49,6 +55,7 @@ connect((err, db) => {
         throw (err);
     }
 
+    app.db = db;
     app.set('db', db);
 
     //init router

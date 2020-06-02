@@ -35,7 +35,7 @@ class HomeUploading extends Component{
 
         const {event} = nextProps;
 
-        console.log("getting an event from uplaoding", event);
+        console.log("getting an event from uploading", event);
 
         switch (_.get(event, 'type')){
 
@@ -111,7 +111,13 @@ class HomeUploading extends Component{
                             </div>
 
                             <div className={'app-form-actions'}>
-                               <button className={'app-upload-cancel-button app-button'} type={'button'}>Cancel</button>
+                               <button onClick={() => {
+
+                                    if(this.props.onCancel){
+                                        this.props.onCancel(true);
+                                    }
+
+                               }} className={'app-upload-cancel-button app-button'} type={'button'}>Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -126,7 +132,7 @@ class HomeUploading extends Component{
 HomeUploading.propTypes = {
     data: PropTypes.object,
     event: PropTypes.object,
-    //onCancel: PropTypes.func
+    onCancel: PropTypes.func
 }
 
 export default HomeUploading;
