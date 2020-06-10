@@ -24,7 +24,6 @@
       "no-unused-vars": 1
     }
   },
-  "author": "toan@tabvn.com",
   "license": "ISC",
   "dependencies": {
     "archiver": "^2.1.0",
