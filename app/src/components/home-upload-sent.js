@@ -8,16 +8,16 @@ import {history} from "../history";
 
 class HomeUploadSent extends Component{
 
-    constructor(props){
-        super(props);
-    }
+    // constructor(props){
+    //     super(props);
+    // }
 
     render(){
 
         const {data} = this.props;
         console.log("Data", data);
         const to = _.get(data, 'to');
-        const postId = _.get(data, '_id');
+        const postId = _.get(data, '_id'); 
 
         return (
             <div className={'app-card app-card-upload-sent'}>

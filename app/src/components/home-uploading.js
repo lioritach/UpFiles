@@ -48,12 +48,6 @@ class HomeUploading extends Component{
                 const currentTime = new Date();
                 let diffTimeBetweenStartAndCurrent = currentTime - this.state.startTime; // miliSec
 
-                //Formular
-               /* 1 milisecond = X ?
-                diffTimeBetweenStartAndCurrent = loaded;
-
-                so: x = loaded * 1 / diffTimeBetweenStartAndCurrent = */
-
                 if(diffTimeBetweenStartAndCurrent === 0){
                     diffTimeBetweenStartAndCurrent = 1;
                 }

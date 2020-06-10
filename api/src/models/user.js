@@ -63,7 +63,7 @@ export default class User{
 
         const app = this.app;
         let error = null;
-        let user = {name: "lior itach", email: "lioritach@yahoo.com"};
+        let user = {name: "YourName", email: "YourEmail@gmail.com"};
 
         console.log("Email: ", email, "password:", password);
 
@@ -117,54 +117,6 @@ export default class User{
         })
     }
         
-    
-
-
-
-    //             if(passwordCheck){
-
-    //                 const auth = new Auth(app);
-    //                 auth.createToken(user, null, (err, token) => {
-
-    //                     if(err){
-
-	// 						error = {message: "An error login your account"};
-	// 						return cb(error, null);
-
-	// 					}
-
-	// 					delete user.password;
-	// 					token.user = user;
-	// 					return callback(null, token);
-
-	// 				});
-
-
-    //                 }else{        
-	// 				    error = {message: "Password does not match."};
-	// 				    return callback(error, null);
-
-    //                 }
-
-
-    //             }
-
-    //             if(err || !user){
-
-    //                 error = {message: "An error login your account"};
-    //                 return callback(error, null);
-    
-    //             }
-
-
-
-    //     });
-
-
-
-    // }
-
-
     initWithObject(obj){
 
 		this.model.name = _.trim(_.get(obj, 'name', null));
@@ -220,7 +172,7 @@ export default class User{
     
     create(cb){
 
-        const model = this.model;
+        let model = this.model;
         const db = this.app.db;
         const hashPassword = bcrypt.hashSync(model.password, saltRounds);
         model.password = hashPassword;
@@ -245,34 +197,6 @@ export default class User{
 
         });
         
-
-
-		// let model = this.model;
-		// const db = this.app.db;
-		// const hashPassword = bcrypt.hashSync(model.password, saltRounds);
-		// model.password = hashPassword;	
-
-		// this.validate((errors) => {
-
-		// 	let messages = [];
-		// 	if(errors.length > 0){
-
-		// 		_.each(errors, (err) => {
-
-		// 			messages.push(err.message);
-
-		// 		});
-
-		// 		return cb(_.join(messages, ','), null);			
-		// 	}		
-
-		// 	db.collection('users').insertOne(model, (err, result) => {
-
-		// 			return cb(err, model);
-		// 	});
-
-		// });
-
 	}
 
 

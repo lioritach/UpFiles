@@ -56,6 +56,7 @@ class View extends Component{
         const totalSize = this.getDownloadSize();
         const postId = _.get(post, '_id', null);
 
+
         return(
 
             <div className={'app-page-download'}>
@@ -91,7 +92,6 @@ class View extends Component{
                                 
                             </div>
                             <div className={'app-download-actions app-form-actions'}>
-                                <button className={'app-button'} type={'button'}>Share</button>
                                 <button onClick={() =>{
 
                                     history.push('/')

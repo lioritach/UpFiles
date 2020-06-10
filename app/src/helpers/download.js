@@ -1,6 +1,6 @@
 import axios from 'axios'
-import _ from 'lodash'
 import {apiUrl} from "../config";
+import _ from 'lodash'
 
 export const getDownloadInfo = (id) => {
 

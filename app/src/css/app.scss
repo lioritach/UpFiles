@@ -6,7 +6,15 @@
 
 body{
     font-family: 'Open Sans', sans-serif;
-    background: $primary-color;
+    //background: $primary-color;
+    background-image: url("https://image.freepik.com/free-vector/safe-data-storage-service-cloud_1284-32735.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    // -webkit-background-size: cover;
+    // -moz-background-size: cover;
+    // -o-background-size: cover;
+    // background-size: 500px;
     color: $body-text-color;
     font-size: 13px;
 }
@@ -30,6 +38,7 @@ a{
     }
 }
 
+
 .app-container {
     position: relative;
     overflow: hidden;
@@ -38,7 +47,7 @@ a{
         text-align: center;
         padding-bottom: 30px;
         .app-site-info{
-            color: #FFFFFF;
+            color: $primary-color;
             h1{
                 margin: 0;
                 padding: 0;
@@ -46,11 +55,11 @@ a{
                 font-weight: 800;
             }
             .site-title{
-                margin: 20px 0 0 0;
+                margin: 10px 0 0 0;
                 padding: 0;
-                font-size: 50px;
+                font-size: 25px;
                 font-weight: 300;
-                color: rgba(255, 255, 255, 9);
+                color: $primary-color;
                 @media (max-width: $screen-sm){
                     display: none;
                 }
@@ -61,9 +70,9 @@ a{
                 }
                 margin-top: 5px;
                 padding: 0;
-                font-size: 30px;
+                font-size: 20px;
                 font-weight: 300;
-                color: rgba(255, 255, 255, 6);
+                color: $primary-color;
             }
         }
     }
@@ -366,7 +375,7 @@ a{
   
   .app-top-header{
     text-align: center;
-    color: #FFFFFF;
+    color: $primary-color;
     h1{
       margin: 0;
       padding: 0;

@@ -33,6 +33,7 @@ class AppRouter {
 
         });
 
+        
     
         //upload routing
         app.post('/api/upload', upload.array('files'), (req, res, next) => {
@@ -48,18 +49,15 @@ class AppRouter {
             if(fileModels.length){
 
                 db.collection('files').insertMany(fileModels, (err, result) =>{
-
                     if(err){
                         return res.status(503).json({
-
                             error: {
                                 message: "Unable saved your files!",
-                            }
-                        
+                            }    
                         });
+
                     }
 
-    
                     let post = new Post(app).initWithObject({
 
                         from: _.get(req, 'body.from'),
@@ -69,7 +67,7 @@ class AppRouter {
 
                     }).toJSON();
 
-                    //let save post object to posts collection
+                    //save post object to posts collection
                     db.collection('posts').insertOne(post, (err, result) => {
 
                         if(err){
@@ -118,10 +116,8 @@ class AppRouter {
                 const filePath = path.join(uploadDir, fileName);
             
                 return res.download(filePath, _.get(result, '[0].originalName'), (err) => {
-
                     if(err){
                         return res.status(404).json({
-
                             error: {
                                 message: "The file is not found!"
                             }
@@ -137,12 +133,10 @@ class AppRouter {
             
         });
 
-        // routing for post details /api/posts/:id
-
+        //routing for post details /api/posts/:id
         app.get('/api/posts/:id', (req, res, next) =>{
 
             const postId = _.get(req, 'params.id');
-
             this.getPostById(postId, (err, result) => {
 
                 if(err){
@@ -155,7 +149,7 @@ class AppRouter {
         });
 
 
-        // Routing download files
+        //Routing download files
         app.get('/api/posts/:id/download', (req, res, next) => {
 
             const id = _.get(req, 'params.id', null);
@@ -173,16 +167,13 @@ class AppRouter {
         });
 
 
-        // Create new users
+        //Create new users
         app.post('/api/users', (req, res, next) => {
 
             const body = _.get(req, 'body');
             console.log("data from fronted:", body);
-
             const user = new User(app);
-
             user.initWithObject(body);
-
             user.initWithObject(body).create((err, newUser) => {
 
                 console.log("New user created with error & callback", err, newUser);
@@ -202,7 +193,6 @@ class AppRouter {
         });
 
         // Login user 
-
         app.post('/api/users/login', (req, res, next) => {
 
             const body = _.get(req, 'body', {});
@@ -213,11 +203,9 @@ class AppRouter {
             user.login(email, password, (err, token) => {
 
                 if(err){
-
                     return res.status(401).json({
-                        message: "An error login your account. Please try again!"
+                        message: "An error login to your account. Please try again!"
                     });
-
                 }
 
                 return res.status(200).json(token);
@@ -231,12 +219,10 @@ class AppRouter {
 
 
 
-        // get my profile detail
-
+        // get my profile details
         app.get('/api/users/:id', (req, res, next) => {
 
             const auth = new Auth(app);
-
             auth.checkAuth(req, (isLoggedIn) => {
 
                 if(!isLoggedIn){
@@ -244,7 +230,7 @@ class AppRouter {
                     return res.status(401).json({
                         message: "Unauthorized"
                     });
-
+                    
                 }
 
                 const userId = _.get(req, 'params.id', null);

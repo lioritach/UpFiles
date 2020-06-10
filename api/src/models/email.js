@@ -32,7 +32,6 @@ export default class Email {
         }
 
         //send email with defined transport object
-    
         email.sendMail(messageOptions, (err, info) => {
             if (err) {
                 console.log('Failed to send mail to: ' + to, err);

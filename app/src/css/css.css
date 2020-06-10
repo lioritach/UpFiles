@@ -116,10 +116,7 @@ table {
 
 body {
   font-family: "Open Sans", sans-serif;
-  background-image: url("https://image.freepik.com/free-vector/safe-data-storage-service-cloud_1284-32735.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100%;
+  background: #1b65f6;
   color: #96a3bb;
   font-size: 13px;
 }
@@ -153,7 +150,7 @@ a {
   padding-bottom: 30px;
 }
 .app-container .app-header .app-site-info {
-  color: #1b65f6;
+  color: #FFFFFF;
 }
 .app-container .app-header .app-site-info h1 {
   margin: 0;
@@ -162,11 +159,11 @@ a {
   font-weight: 800;
 }
 .app-container .app-header .app-site-info .site-title {
-  margin: 10px 0 0 0;
+  margin: 20px 0 0 0;
   padding: 0;
-  font-size: 25px;
+  font-size: 50px;
   font-weight: 300;
-  color: #1b65f6;
+  color: white;
 }
 @media (max-width: 768px) {
   .app-container .app-header .app-site-info .site-title {
@@ -176,9 +173,9 @@ a {
 .app-container .app-header .app-site-info .site-slogan {
   margin-top: 5px;
   padding: 0;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 300;
-  color: #1b65f6;
+  color: white;
 }
 @media (max-width: 768px) {
   .app-container .app-header .app-site-info .site-slogan {
@@ -438,7 +435,7 @@ a {
 }
 .app-top-header {
   text-align: center;
-  color: #1b65f6;
+  color: #FFFFFF;
   margin-bottom: 20px;
 }
 .app-top-header h1 {
@@ -618,4 +615,4 @@ a {
   color: #d0152e;
 }
 
-/*# sourceMappingURL=app.css.map */
+/*# sourceMappingURL=css.css.map */

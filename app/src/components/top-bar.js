@@ -24,7 +24,7 @@ export default class TopBar extends Component {
 
                                 <div className="user-profile">
                                     <div className="user-profile-picture">            
-                                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y"/>
+                                        <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y" alt="loginLogo"/>
                                     </div>
                                 </div>
 

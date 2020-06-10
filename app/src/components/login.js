@@ -161,7 +161,7 @@ export default class LoginForm extends Component {
 
     _onSubmit(event){
 
-        const {isLogin, user} = this.state;
+        const {isLogin} = this.state;
         event.preventDefault();
 
         let fieldNeedToValidate = ['email', 'password'];

@@ -3,9 +3,10 @@ export const smtp = {
     host: 'smtp.sendgrid.net',
     port: 587,
     secure: false, //True for 465, false for others
+    //NOTE! use your password. Take it from the web sendgrid.net
     auth: {
         user: 'apikey', //generated ethernal user
-        pass: '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' //generated ethernal password
+        pass: 'YOURPASSWORD' //generated ethernal password
     }
 
 };
