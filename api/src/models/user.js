@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import Auth from './auth'
 import {ObjectID} from 'mongodb'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt' //for encrypt password
 
-const saltRounds = 10;
+const saltRounds = 10; //for encrypt password
 
 export default class User{
 
@@ -79,7 +79,7 @@ export default class User{
             if(err === null && user){
 
                 
-                const passwordCheck = bcrypt.compareSync(password, user.password); // false
+                const passwordCheck = bcrypt.compareSync(password, user.password); // take the pass from the user and encrypts it
 
                 if(passwordCheck){
                     // create new token and return this token key for user and use it for later request.
@@ -175,7 +175,7 @@ export default class User{
         let model = this.model;
         const db = this.app.db;
         const hashPassword = bcrypt.hashSync(model.password, saltRounds);
-        model.password = hashPassword;
+        model.password = hashPassword; //for encrypt password
 
         this.validate((errors) => {
 
@@ -198,8 +198,5 @@ export default class User{
         });
         
 	}
-
-
-
 
 }
