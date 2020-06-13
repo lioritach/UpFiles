@@ -9,3 +9,13 @@ images in a private way.
 - The structure of storing will be: user_id, file_id.
 - The files will be stored at MongoDB.
 - Each user's password will be encrypted and secure.
+
+To run the project:
+- cd yourPath/filesupload/api
+- npm run dev
+
+Open another terminal and then:
+- cd yourPath/filesupload/app
+- npm start.
+
+Enjoy :)
