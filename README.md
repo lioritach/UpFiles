@@ -11,11 +11,13 @@ images in a private way.
 - Each user's password will be encrypted and secure.
 
 To run the project:
+
 For the backend:
 - cd yourPath/filesupload/api
 - npm run dev
 
 Open another terminal and then:
+
 For the fronted:
 - cd yourPath/filesupload/app
 - npm start.
