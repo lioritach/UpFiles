@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
-const KB = 1024;
-const MB = KB * KB;
+const KB = 1024; //the size of kb
+const MB = KB * KB; //the size for mb
 
 export const betterNumber = (input, round = true) => {
 
