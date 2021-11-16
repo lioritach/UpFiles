@@ -27,7 +27,7 @@
   "license": "ISC",
   "dependencies": {
     "archiver": "^2.1.0",
-    "aws-sdk": "^2.141.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
